@@ -1,0 +1,25 @@
+{
+  "name": "AppCreative vetting exercise",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "hostRequirements": {
+    "cpus": 2,
+    "memory": "8gb"
+  },
+  "postCreateCommand": "pip install --user -r requirements.txt && (docker compose pull || true)",
+  "forwardPorts": [3000, 8001],
+  "portsAttributes": {
+    "3000": { "label": "Grafana" },
+    "8001": { "label": "Orders app" }
+  },
+  "customizations": {
+    "codespaces": {
+      "openFiles": ["CANDIDATE.md"]
+    },
+    "vscode": {
+      "extensions": ["ms-python.python"]
+    }
+  }
+}

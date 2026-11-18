@@ -1,0 +1,24 @@
+# Write ONE Prometheus-style alert rule for the orders service.
+#
+# Metrics you can use (one value per minute, see orders_week.csv):
+#   orders_error_rate_percent      percent of requests that failed
+#   orders_p95_latency_ms          95th-percentile response time
+#   orders_requests_per_minute     traffic
+#
+# The checker understands plain comparisons and these functions:
+#   avg_over_time, min_over_time, max_over_time, sum_over_time,
+#   quantile_over_time, and combining conditions with "and".
+#
+# Replace the placeholder rule below with yours.
+
+groups:
+  - name: orders
+    rules:
+      - alert: OrdersAlert
+        expr: orders_error_rate_percent > 50
+        for: 0m
+        labels:
+          severity: ""
+        annotations:
+          summary: ""
+          runbook_url: ""

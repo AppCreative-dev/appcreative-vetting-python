@@ -1,0 +1,11 @@
+{
+  "language": "Python",
+  "test_command": [
+    "python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests"
+  ],
+  "test_hint": "python -m pytest tests"
+}

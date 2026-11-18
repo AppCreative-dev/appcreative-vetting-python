@@ -1,0 +1,27 @@
+# Grafana (with Tempo for traces) plus an OpenTelemetry Collector.
+# The collector receives telemetry on ports 4317/4318, saves a copy for the
+# checker in telemetry-output/, and forwards everything to Grafana.
+
+services:
+  lgtm:
+    image: grafana/otel-lgtm:latest
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SERVER_ROOT_URL: ${GRAFANA_ROOT_URL:-http://localhost:3000/}
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+      GF_AUTH_DISABLE_LOGIN_FORM: "true"
+
+  collector:
+    image: otel/opentelemetry-collector-contrib:0.120.0
+    command: ["--config=/etc/otelcol/config.yaml"]
+    user: "${HOST_UID:-1000}:${HOST_GID:-1000}"
+    volumes:
+      - ./observability/collector.yaml:/etc/otelcol/config.yaml:ro
+      - ./telemetry-output:/telemetry-output
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+    depends_on:
+      - lgtm

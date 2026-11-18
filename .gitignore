@@ -1,0 +1,8 @@
+# Created while the app runs. Not part of a submission.
+/logs/
+/telemetry-output/
+/check-results.txt
+__pycache__/
+.pytest_cache/
+bin/
+obj/
